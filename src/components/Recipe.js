@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   });
 
 export default function Recipe( recipes ){
-    
+    console.log(recipes)
     const classes = useStyles();
     const {title, desciption, foodImage, ingredients, category} = recipes.recipe.fields;
     // const [redirect, setRedirect] = useState(false)

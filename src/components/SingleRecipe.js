@@ -1,6 +1,6 @@
-import React, { useState, useQuery } from "react";
-import ReactDOM from 'react-dom';
+import React, { useState } from "react";
 import {Link} from 'react-router-dom';
+import { client } from "../client";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,38 +14,53 @@ import Header from './Header';
 import Footer from './Footer';
 
 
+
 const useStyles = makeStyles({
     root: {
         width: 900,
-    //   maxWidth: 345,
-      padding: "20px",
-      boxSizing: 'border-box',
-      margin: '10px',
-      
-      
+        padding: "20px",
+        boxSizing: 'border-box',
+        margin: '10px',
     },
     media: {
-      width: "300px", 
-      height: "300px",
-      objectFit:"cover", 
-      objectPosition: "center", 
-      margin: '0px', 
-      borderRadius: '1rem',
-      display: 'inline-block'
+        width: "300px", 
+        height: "300px",
+        objectFit:"cover", 
+        objectPosition: "center", 
+        margin: '0px', 
+        borderRadius: '1rem',
+        display: 'inline-block'
     },
     innerContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
     }
-  });
+});
 
 export default function SingleRecipe(recipes) {
     console.log(recipes)
     const classes = useStyles();
     const {title, desciption, foodImage, ingredients, category} = recipes.location.params.recipes.recipe.fields;
+    const [fetchedRecipes, setFetchedRecipes] = useState([])
 
+    // if(!recipes){
+    //     function fetchData(){
+    //         client.getEntries({
+    //             'content_type': "recipe"
+    //         })
+    //         .then(res => {
+    //             console.log(res)
+    //             setFetchedRecipes(res.items)
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         })
+    //     };
+    // }
+    
     return(
+        
         <div className="outerContainter">
             <Header />
             <div className={classes.innerContainer}>
@@ -57,7 +72,6 @@ export default function SingleRecipe(recipes) {
                 src={foodImage.fields.file.url}
                 alt={title}
                 title={title}
-                // style={{width: "300px", height: "300px", objectFit:"cover", objectPosition: "center", margin: '0px', borderRadius: '1rem'}}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">{title}</Typography>
@@ -71,9 +85,8 @@ export default function SingleRecipe(recipes) {
             </CardContent>
         </CardActionArea> 
         <CardActions>
-        
             <Link to="/" size="small" color="primary">
-                Tillbaka till första sidan
+                <Button variant="contained">Tillbaka till första sidan</Button>
             </Link>
         </CardActions> 
     </Card>

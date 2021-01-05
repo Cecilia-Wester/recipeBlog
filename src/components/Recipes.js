@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 export default function Recipes() {
-    const [fetchedRecipes, setFetchedRecipes] = useState([])
+    const [fetchedRecipes, setFetchedRecipes] = useState([]);
+
     function fetchData(){
         client.getEntries({
             'content_type': "recipe"
@@ -22,7 +23,8 @@ export default function Recipes() {
     
     useEffect(() => {
         fetchData();
-    }, [])
+    }, []);
+    
     
     return(
         <React.Fragment>

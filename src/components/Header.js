@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import NewPost from './NewPost';
+import {Link} from 'react-router-dom'
 
 export default function Header() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function Header() {
                 <h1 style={{fontFamily: 'Playfair Display' }}>Cecilias matblogg</h1>
                 <h4 style={{fontFamily: 'Playfair Display' }}> -mina bästa samlade recept</h4>
                 <Button variant="contained" onClick={() => setModalOpen(true)}>Lägg till nytt recept</Button>
+                <Link to='./newRecipe' variant="contained" onClick={() => setModalOpen(true)}>Lägg till nytt recept</Link>
             </header>
             {modalOpen && <NewPost setModalOpen={setModalOpen} modalOpen={modalOpen} /> }
         </div>

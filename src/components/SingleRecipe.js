@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {Link} from 'react-router-dom';
 import { client } from "../client";
 
@@ -38,60 +38,84 @@ const useStyles = makeStyles({
     }
 });
 
-export default function SingleRecipe(recipes) {
-    console.log(recipes)
+export default function SingleRecipe() { 
+    console.log(window.location.pathname.split('/')[2]);
+    // console.log(recipes)
+    const [fetchRecipe, setFetchRecipe] = useState(window.location.pathname.split('/')[2]);
     const classes = useStyles();
-    const {title, desciption, foodImage, ingredients, category} = recipes.location.params.recipes.recipe.fields;
-    const [fetchedRecipes, setFetchedRecipes] = useState([])
+    const [recipe, setRecipe] = useState();
 
-    // if(!recipes){
-    //     function fetchData(){
-    //         client.getEntries({
-    //             'content_type': "recipe"
-    //         })
-    //         .then(res => {
-    //             console.log(res)
-    //             setFetchedRecipes(res.items)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    //     };
-    // }
-    
-    return(
+    const fetchMyAPI = useCallback(async () => {
+        let respons = await client.getEntries({
+                    'content_type': "recipe",
+                    'fields.title[in]': fetchRecipe
+                })
+                // respons = await respons.json()
+        setRecipe(respons.items[0].fields)
         
-        <div className="outerContainter">
-            <Header />
-            <div className={classes.innerContainer}>
-        <Card className={classes.root} tag="div">
-            <CardActionArea style={{ borderRadius: '1rem'}}>
-            <CardMedia 
-                className={classes.media}
-                component="img"
-                src={foodImage.fields.file.url}
-                alt={title}
-                title={title}
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">{title}</Typography>
-                {ingredients.map((ingredient, index) => {
-                    return(
-                        <Typography key={index} variant="body2" color="textSecondary">
-                        {ingredient}
-                        </Typography>
-                    )
-                })} 
-            </CardContent>
-        </CardActionArea> 
-        <CardActions>
-            <Link to="/" size="small" color="primary">
-                <Button variant="contained">Tillbaka till första sidan</Button>
-            </Link>
-        </CardActions> 
-    </Card>
-    </div>
-    <Footer />
-    </div>
+      }, [])
+
+      useEffect(() => {
+        fetchMyAPI()
+      }, [])
+
+    // useEffect(() => {
+    //     client.getEntries({
+    //         'content_type': "recipe",
+    //         'fields.title[in]': fetchRecipe
+    //     })
+    //     .then((res) => {
+    //         setRecipe(res.items[0].fields)
+    //     })
+    // }, [])
+
+   
+    if(recipe){
+        return(
+            <div className="outerContainter">
+                <Header />
+                <div className={classes.innerContainer}>
+                <Card className={classes.root} tag="div">
+                <CardActionArea style={{ borderRadius: '1rem'}}>
+                <CardMedia 
+                    className={classes.media}
+                    component="img"
+                    src={recipe.foodImage.fields.file.url}
+                    alt={recipe.title}
+                    title={recipe.title}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">{recipe.title}</Typography>
+                    {recipe.ingredients.map((ingredient, index) => {
+                        return(
+                            <Typography key={index} variant="body2" color="textSecondary">
+                            {ingredient}
+                            </Typography>
+                        )
+                    })}
+                    <Typography>  
+                        {recipe.category.map((cat, index )=>{
+                            return(
+                                <p key={index}>{cat.fields.title}</p>
+                            )
+                        })}
+                    </Typography> 
+
+                    <Typography>{recipe.desciption}</Typography>
+                </CardContent>
+            </CardActionArea> 
+            <CardActions>
+                <Link to="/" size="small" color="primary">
+                    <Button variant="contained">Tillbaka till första sidan</Button>
+                </Link>
+            </CardActions> 
+        </Card>
+        </div>
+        <Footer />
+        </div>
+        )
+    }
+    return(
+    <p>wait...</p>
     )
 }

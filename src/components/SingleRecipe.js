@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { client } from "../client";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,8 +12,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Header from './Header';
 import Footer from './Footer';
-
-
 
 const useStyles = makeStyles({
     root: {
@@ -39,37 +37,22 @@ const useStyles = makeStyles({
 });
 
 export default function SingleRecipe() { 
-    console.log(window.location.pathname.split('/')[2]);
-    // console.log(recipes)
     const [fetchRecipe, setFetchRecipe] = useState(window.location.pathname.split('/')[2]);
     const classes = useStyles();
     const [recipe, setRecipe] = useState();
 
     const fetchMyAPI = useCallback(async () => {
         let respons = await client.getEntries({
-                    'content_type': "recipe",
-                    'fields.title[in]': fetchRecipe
-                })
-                // respons = await respons.json()
+            'content_type': "recipe",
+            'fields.title[in]': fetchRecipe
+        })
         setRecipe(respons.items[0].fields)
-        
-      }, [])
+    }, []);
 
-      useEffect(() => {
+    useEffect(() => {
         fetchMyAPI()
-      }, [])
+    }, []);
 
-    // useEffect(() => {
-    //     client.getEntries({
-    //         'content_type': "recipe",
-    //         'fields.title[in]': fetchRecipe
-    //     })
-    //     .then((res) => {
-    //         setRecipe(res.items[0].fields)
-    //     })
-    // }, [])
-
-   
     if(recipe){
         return(
             <div className="outerContainter">
@@ -100,7 +83,6 @@ export default function SingleRecipe() {
                             )
                         })}
                     </Typography> 
-
                     <Typography>{recipe.desciption}</Typography>
                 </CardContent>
             </CardActionArea> 
@@ -116,6 +98,6 @@ export default function SingleRecipe() {
         )
     }
     return(
-    <p>wait...</p>
+    <p>Wait...</p>
     )
 }

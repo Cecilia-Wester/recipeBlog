@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -11,22 +11,18 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
     root: {
         width: 345,
-    //   maxWidth: 345,
-      padding: "20px",
-      boxSizing: 'border-box',
-      margin: '10px',
-      
-      
+        padding: "20px",
+        boxSizing: 'border-box',
+        margin: '10px',
     },
     media: {
-      height: 300,
+        height: 300,
     },
-  });
+});
 
 export default function Recipe( recipes ){
     const classes = useStyles();
-    const {title, desciption, foodImage, ingredients, category} = recipes.recipe.fields;
-    console.log(recipes)
+    const {title, foodImage } = recipes.recipe.fields;
     function onClickCard(e){
         e.preventDefault();
         <Link to='/singleRecipe' recipes={recipes} ></Link>

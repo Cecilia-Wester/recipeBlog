@@ -13,7 +13,6 @@ export default function Recipes() {
             'content_type': "recipe"
         })
         .then(res => {
-            console.log(res)
             setFetchedRecipes(res.items)
         })
         .catch(error => {

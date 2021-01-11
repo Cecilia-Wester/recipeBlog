@@ -23,10 +23,6 @@ const useStyles = makeStyles({
 export default function Recipe( recipes ){
     const classes = useStyles();
     const {title, foodImage } = recipes.recipe.fields;
-    function onClickCard(e){
-        e.preventDefault();
-        <Link to='/singleRecipe' recipes={recipes} ></Link>
-    }
 
     return(
         <Card className={classes.root} >

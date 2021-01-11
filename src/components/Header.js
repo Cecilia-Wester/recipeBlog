@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import NewPost from './NewPost';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
     const [modalOpen, setModalOpen] = useState(false);

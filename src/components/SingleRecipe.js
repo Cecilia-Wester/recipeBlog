@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function SingleRecipe() { 
+export default function SingleRecipe() {
     const [fetchRecipe, setFetchRecipe] = useState(window.location.pathname.split('/')[2]);
     const classes = useStyles();
     const [recipe, setRecipe] = useState();
@@ -58,43 +58,41 @@ export default function SingleRecipe() {
             <div className="outerContainter">
                 <Header />
                 <div className={classes.innerContainer}>
-                <Card className={classes.root} tag="div">
-                <CardActionArea style={{ borderRadius: '1rem'}}>
-                <CardMedia 
-                    className={classes.media}
-                    component="img"
-                    src={recipe.foodImage.fields.file.url}
-                    alt={recipe.title}
-                    title={recipe.title}
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">{recipe.title}</Typography>
-                    {recipe.ingredients.map((ingredient, index) => {
-                        return(
-                            <Typography key={index} variant="body2" color="textSecondary">
-                            {ingredient}
-                            </Typography>
-                        )
-                    })}
-                    <Typography>  
-                        {recipe.category.map((cat, index )=>{
-                            return(
-                                <p key={index}>{cat.fields.title}</p>
-                            )
-                        })}
-                    </Typography> 
-                    <Typography>{recipe.desciption}</Typography>
-                </CardContent>
-            </CardActionArea> 
-            <CardActions>
-                <Link to="/" size="small" color="primary">
-                    <Button variant="contained">Tillbaka till första sidan</Button>
-                </Link>
-            </CardActions> 
-        </Card>
-        </div>
-        <Footer />
-        </div>
+                    <Card className={classes.root} tag="div">
+                        <CardActionArea style={{ borderRadius: '1rem'}}>
+                            <CardMedia 
+                                className={classes.media}
+                                component="img"
+                                src={recipe.foodImage.fields.file.url}
+                                alt={recipe.title}
+                                title={recipe.title}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">{recipe.title}</Typography>
+                                {recipe.ingredients.map((ingredient, index) => {
+                                    return(
+                                        <Typography key={index} variant="body2" color="textSecondary">
+                                            {ingredient}
+                                        </Typography>
+                                    )
+                                })}
+                                {recipe.category.map((cat, index )=>{
+                                    return(
+                                        <Typography key={index}>{cat.fields.title}</Typography>
+                                    )
+                                })}
+                                <Typography>{recipe.desciption}</Typography>
+                            </CardContent>
+                        </CardActionArea> 
+                        <CardActions>
+                            <Link to="/" size="small" color="primary">
+                                <Button variant="contained">Tillbaka till första sidan</Button>
+                            </Link>
+                        </CardActions> 
+                    </Card>
+                </div>
+                <Footer />
+            </div>
         )
     }
     return(

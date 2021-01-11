@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container';
 export default function Recipes() {
     const [fetchedRecipes, setFetchedRecipes] = useState([]);
 
-    function fetchData(){
+    const fetchData = () => {
         client.getEntries({
             'content_type': "recipe"
         })
@@ -32,7 +32,7 @@ export default function Recipes() {
                 <Typography component="div" style={{  background: 'rgb(208,133,210)', display: 'flex', borderRadius: '.5rem'}}>
                 {fetchedRecipes.map((recipe, index) => {
                     return(
-                        <Recipe key={index} recipe={ recipe } />
+                        <Recipe key={ index } recipe={ recipe } />
                     )}) 
                 }
                 </Typography>

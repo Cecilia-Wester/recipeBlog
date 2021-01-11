@@ -76,8 +76,8 @@ export default function NewPost({setModalOpen}) {
                 }
             }
         };
-        clientManagement.getSpace('n8h12pdxd08n')
 
+        clientManagement.getSpace('n8h12pdxd08n')
         .then((space) => space.getEnvironment('master'))
         .then((environment) => environment.createAsset(fileData))
         .then((asset) => asset.processForAllLocales())
@@ -92,11 +92,12 @@ export default function NewPost({setModalOpen}) {
         .catch((error) => {
             console.log(error)
         })           
-    }
+    };
 
 
     const createNewRecipe = (assetId) => {
         console.log('publishedAsset',assetId)
+        console.log(categories)
         clientManagement.getSpace('n8h12pdxd08n')
         .then((space) => {
             space.getEnvironment('master')
@@ -113,7 +114,6 @@ export default function NewPost({setModalOpen}) {
                                 sys: {
                                     type: 'Link',
                                     linkType: 'Asset',
-
                                     id: assetId,
                                 }
                             }
@@ -140,12 +140,12 @@ export default function NewPost({setModalOpen}) {
         .catch((error2) => {
             console.log(error2)
         })
-    }
+    };
 
-    function onSave(e) {
+    const onSave = (e) => {
         e.preventDefault();
         publishNewRecipe();
-        setModalOpen(false)
+        setModalOpen(false);
     }
 
     const addAnotherIngredient = (e) => {
@@ -154,8 +154,8 @@ export default function NewPost({setModalOpen}) {
             setIngredients([...ingredients, ingredient]);
             setIngredient('');
         }
-        return
-    }
+        return;
+    };
 
     useEffect(() => {
         client.getEntries({
@@ -167,11 +167,11 @@ export default function NewPost({setModalOpen}) {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, []);
 
-    const handleCategory = (category) => {
+    const handleCategory = (e, id, category) => {
         setCategories([...categories, category]);
-    }
+    };
 
 
     return ReactDOM.createPortal(( 
@@ -179,9 +179,8 @@ export default function NewPost({setModalOpen}) {
             <form className = {classes.form} noValidate autoComplete = "off" >
                 <header>
                     <h3> Lägg in ett nytt recept </h3> 
-                </header > 
-
-                <TextField required id = "receptnamn" label = "Receptnamn" variant = "outlined" value = {title} onChange = {(e) => setTitle(e.target.value)}/> 
+                </header >
+                <TextField required id = "receptnamn" label = "Receptnamn" variant = "outlined" value = {title} onChange = {(e) => setTitle(e.target.value)} style={{marginBottom: '2rem'}}/> 
                 <input type = 'url' placeholder = 'Lägg till en länk till bild' onChange = {(e) => setImage(e.target.value)} /> 
                 <ul> 
                     {ingredients.map((ing, index) => {
@@ -212,4 +211,4 @@ export default function NewPost({setModalOpen}) {
             </form> 
         </div >
     ), document.body);
-}
+};
